@@ -15,14 +15,26 @@
 /* ==========================================================================
    Declare Globals
    ========================================================================== */
-let remainder;
+
 let selectedAnimal;
 let animalHint;
 let undercoresArr;
 let ranNum;
 let animals;
+let keyCounter = 0;
+let winsScore = 0;
+let lossesScore = 0;
+
+const guessInput = document.querySelector('#guessLetter');
+const letterUsed = document.querySelector('#lettersUsed');
+const victory = document.querySelector('#victory');
 
 animals = [ 'chicken', 'duck', 'horse', 'cow', 'pig' ];
+
+
+/* ==========================================================================
+   Initialize Game
+   ========================================================================== */
 
 // initialization function
 animalMagic();
@@ -39,6 +51,10 @@ function animalMagic() {
         document.querySelector('#animalImage').src = './resources/img/cow.png';
     } else if (selectedAnimal === 'chicken') {
         document.querySelector('#animalImage').src = './resources/img/chicken.png';
+    } else if (selectedAnimal === 'duck') {
+        document.querySelector('#animalImage').src = './resources/img/duck.png';
+    } else if (selectedAnimal === 'horse') {
+        document.querySelector('#animalImage').src = './resources/img/horse.png';
     } else {
         document.querySelector('#animalImage').src = './resources/img/barnStart.jpg';
     }
@@ -49,26 +65,51 @@ function animalMagic() {
         undercoresArr[i] = '_';
     }
 
-    // have not figured out a good use for this yet...
-    remainder = selectedAnimal.length;
-
-
     // print underscores to screen based on selected animal string length
     animalHint = document.querySelector('#selectedAnimal');
     animalHint.innerText = (undercoresArr.join(' '));
+
+    // set/reset Guess and Victory display
+    letterUsed.innerText = 'Letters Guessed: ';
+    victory.innerText = '';
+
 }
+
+
 /* ==========================================================================
    Key function block
    ========================================================================== */
 
 document.onkeyup = function(e){
 
-    // variables
-    const guessInput = document.querySelector('#guessLetter');
-    const letterUsed = document.querySelector('#lettersUsed');
+    // increment keyCounter
+    keyCounter += 1;
+
+    /*
+       Check For Loose Scenario
+       ========================================================================== */
     
-    //while (remainder > 0) {
-        
+    // check if keyCounter is greater than length of selected animal, bail out if greater
+    if (keyCounter > selectedAnimal.length) {
+        // clear input field
+        guessInput.value = '';
+        // clear letters guessed
+        letterUsed.innerText = '';
+        // display message
+        victory.innerText = 'You loose!!!!';
+        // display losses
+        lossesScore +=1;
+        document.querySelector('#losses').innerText = 'Number of Losses: ' + lossesScore;
+        // reset keyCounter
+        keyCounter = 0;
+        // Innterupt game and load new animal
+        setTimeout(animalMagic, 1000);
+    }
+
+    /*
+       If Keycount not Exceeded; Evaluate Keyboard Input
+       ========================================================================== */
+
     // key capture on event
     let keys = (e.key);
     
@@ -77,37 +118,35 @@ document.onkeyup = function(e){
         if (selectedAnimal[j] === keys) {
             // replace underscore if match
             undercoresArr[j] = keys;
-            remainder -=1; 
         }
+
     } // end for loop
 
-    // write used letters to screen
+    // write letters used to screen
     letterUsed.innerText += keys;
  
-
     // print to screen refactored underscores array that
     animalHint.innerText = (undercoresArr.join(' '));
+
+
+    /*
+       Check for Win Scenario
+       ========================================================================== */
     
     // check if underscore string(from array) matches the selected animal
     if (undercoresArr.join('') === selectedAnimal) {
-        document.querySelector('#victory').innerText = 'WINNER!!!!';
+        victory.innerText = 'WINNER!!!!';
         // ** need to fix score math
-        let score = 0;
-        score += 1;
-        document.querySelector('#wins').innerText += score;
-
+        winsScore += 1;
+        document.querySelector('#wins').innerText = 'Number of Wins: ' + winsScore;
         // clear input field
         guessInput.value = '';
-        // clear letters guessed
-        letterUsed.innerText = '';
+        // reset keyCounter
+        keyCounter = 0;
 
         // load new animal after 1 second, else execution is too fast to see last letter populate array, then to screen
         setTimeout(animalMagic, 1000);
-        
 
-        
     }
-    //} //end while loop
-        
-        
+            
 }; // end eventListener
