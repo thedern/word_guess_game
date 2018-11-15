@@ -1,0 +1,83 @@
+
+/* ==========================================================================
+   General CSS Overrides
+   ========================================================================== */
+html { 
+    /* required for sticky footer */
+    height: 100%;
+}
+
+body {
+    background-image: url(../img/526.jpg);
+    background-repeat: no-repeat;
+    background-size: cover;
+    /* required for sticky footer */
+    min-height: 100%;
+    position: relative;
+
+
+}
+
+/* ==========================================================================
+   Header Overrides
+   ========================================================================== */
+#headerArea {
+    background-color: rgb(0,191,255,0.7);
+    font-family: 'Finger Paint', cursive;
+    color: rgb(177, 22, 10);
+}
+
+
+/* ==========================================================================
+   Game Play Overrides
+   ========================================================================== */
+
+#computerArea {
+    background-color:rgba(0,255,0,0.7); /* green with opacity */
+    min-height: 600px;
+    font-family: 'Finger Paint', cursive;
+    font-weight: bold;
+
+
+}
+
+#computerArea .card-title {
+    font-size: 2.0em;
+}
+
+
+#playerArea {
+    background-color:rgba(0,255,0,0.7); /* green with opacity */
+    min-height: 600px;
+    font-family: 'Finger Paint', cursive;
+    color: rgb(10, 27, 177);
+    font-weight: bold;
+    
+
+}
+
+#playerArea p {
+    font-size: 2.0em;
+}
+
+#startArea p {
+    font-size: 2.0em;
+    font-family: 'Finger Paint', cursive;   
+}
+
+/* ==========================================================================
+   Footer
+   ========================================================================== */
+
+.footer {
+    background-color:rgba(222,184,135,0.5); /* green with opacity */
+
+    /* required for sticky footer */
+    position: absolute;
+    bottom: 0;
+    left: 0;    
+    height: 60px;
+    width: 100%;
+    padding-top: 15px;
+
+}
