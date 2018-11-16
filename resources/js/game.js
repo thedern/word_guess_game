@@ -27,10 +27,10 @@ let lossesScore = 0;
 
 const guessInput = document.querySelector('#guessLetter');
 const letterUsed = document.querySelector('#lettersUsed');
-const lettersCounted = document.querySelector('#lettersCounted');
+const guessesRemaining = document.querySelector('#guessesRemaining');
 const victory = document.querySelector('#victory');
 
-animals = [ 'chicken', 'duck', 'horse', 'cow', 'pig' ];
+animals = [ 'chicken', 'duck', 'horse', 'cow', 'pig', 'goat', 'dog' ];
 
 
 /* ==========================================================================
@@ -56,6 +56,10 @@ function animalMagic() {
         document.querySelector('#animalImage').src = './resources/img/duck.png';
     } else if (selectedAnimal === 'horse') {
         document.querySelector('#animalImage').src = './resources/img/horse.png';
+    } else if (selectedAnimal === 'goat') {
+        document.querySelector('#animalImage').src = './resources/img/goat.png';
+    } else if (selectedAnimal === 'dog') {
+        document.querySelector('#animalImage').src = './resources/img/dog.png';
     } else {
         document.querySelector('#animalImage').src = './resources/img/barnStart.jpg';
     }
@@ -72,7 +76,7 @@ function animalMagic() {
 
     // set/reset Guess, letters counted, and Victory display
     letterUsed.textContent = 'Letters Guessed: ';
-    lettersCounted.textContent = 'Letters Counted: ';
+    guessesRemaining.textContent = 'Guesses Remaining: ';
     victory.textContent = '';
     
 
@@ -103,14 +107,14 @@ document.onkeyup = function(e){
        Check for Loose Scenario
        ========================================================================== */
     
-    // check if keyCounter is greater than length of selected animal, bail out if greater
-    if (keyCounter > selectedAnimal.length) {
+    // check if keyCounter is greater than length of selected animal +2, bail out if greater
+    if (keyCounter > (selectedAnimal.length + 2)) {
         // clear input field
         guessInput.value = '';
         // clear letters guessed
         letterUsed.textContent = '';
         // clear letters counted
-        lettersCounted.textContent = '';
+        guessesRemaining.textContent = '';
         // display message
         victory.textContent = 'You loose!!!!';
         // display losses
@@ -119,7 +123,7 @@ document.onkeyup = function(e){
         // reset keyCounter
         keyCounter = 0;
         // Innterupt game and load new animal
-        setTimeout(animalMagic, 1000);
+        setTimeout(animalMagic, 1500);
     }
 
     /*
@@ -142,8 +146,11 @@ document.onkeyup = function(e){
         letterUsed.textContent += keys;
     }
 
+    // calculate remaining guesess before loss is counted
+    let remainder = (selectedAnimal.length + 2) - keyCounter;
+
     // write letters count to screen
-    lettersCounted.textContent = `Letters Counted: ${keyCounter}`;
+    guessesRemaining.textContent = `Guesses Remaining: ${remainder}`;
    
     // print to screen refactored underscores array that
     animalHint.textContent = (undercoresArr.join(' '));
@@ -165,7 +172,7 @@ document.onkeyup = function(e){
         keyCounter = 0;
 
         // load new animal after 1 second, else execution is too fast to see last letter populate array, then to screen
-        setTimeout(animalMagic, 1000);
+        setTimeout(animalMagic, 1500);
 
     }
             

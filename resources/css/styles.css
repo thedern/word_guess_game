@@ -3,14 +3,19 @@
    General CSS Overrides
    ========================================================================== */
 html { 
-    /* required for sticky footer */
-    height: 100%;
+    /* NOT required for sticky footer ...
+       messes up background image.  Being left in but commented for future 
+       project reference.   Only body min-height: 100% is needed. */
+
+
+    /* height: 100%; */
 }
 
 body {
     background-image: url(../img/526.jpg);
     background-repeat: no-repeat;
     background-size: cover;
+    
     /* required for sticky footer */
     min-height: 100%;
     position: relative;
