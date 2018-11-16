@@ -92,7 +92,7 @@ document.onkeyup = function(e){
     // key capture on event
     let keys = (e.key);
     // validate key input
-    let badKeys = ['Backspace','Tab','Space','Shift','Enter'];
+    let badKeys = ['Tab','Space','Shift','Enter'];
     let pattern = new RegExp('[a-z]');
     let result = pattern.test(keys);
     if (result === false || badKeys.includes(keys)) {
