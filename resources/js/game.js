@@ -1,16 +1,3 @@
-/* Applicable Rules
-
-- Use key events to listen for the letters that your players will type.
-- Display the following on the page:
-    . Press any key to get started! <-- DONE
-    . Wins: (# of times user guessed the word correctly).
-    . If the word is madonna, display it like this when the game starts: _ _ _ _ _ _ _. <-- DONE
-    . As the user guesses the correct letters, reveal them: m a d o _  _ a.  <--- DONE
-    . Number of Guesses Remaining: (# of guesses remaining for the user).
-    . Letters Already Guessed: (Letters the user has guessed, displayed like L Z Y H).
-    . After the user wins/loses the game should automatically choose another word and make the user play it.
-
-*/
 
 /* ==========================================================================
    Declare Globals
@@ -92,7 +79,7 @@ document.onkeyup = function(e){
     // key capture on event
     let keys = (e.key);
     // validate key input
-    let badKeys = ['Tab','Space','Shift','Enter'];
+    let badKeys = ['Backspace','Tab','Space','Shift','Enter'];
     let pattern = new RegExp('[a-z]');
     let result = pattern.test(keys);
     if (result === false || badKeys.includes(keys)) {
