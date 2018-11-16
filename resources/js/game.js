@@ -27,6 +27,7 @@ let lossesScore = 0;
 
 const guessInput = document.querySelector('#guessLetter');
 const letterUsed = document.querySelector('#lettersUsed');
+const lettersCounted = document.querySelector('#lettersCounted');
 const victory = document.querySelector('#victory');
 
 animals = [ 'chicken', 'duck', 'horse', 'cow', 'pig' ];
@@ -36,7 +37,7 @@ animals = [ 'chicken', 'duck', 'horse', 'cow', 'pig' ];
    Initialize Game
    ========================================================================== */
 
-// initialization function
+// game initialization function
 animalMagic();
 
 function animalMagic() {
@@ -67,11 +68,13 @@ function animalMagic() {
 
     // print underscores to screen based on selected animal string length
     animalHint = document.querySelector('#selectedAnimal');
-    animalHint.innerText = (undercoresArr.join(' '));
+    animalHint.textContent = (undercoresArr.join(' '));
 
-    // set/reset Guess and Victory display
-    letterUsed.innerText = 'Letters Guessed: ';
-    victory.innerText = '';
+    // set/reset Guess, letters counted, and Victory display
+    letterUsed.textContent = 'Letters Guessed: ';
+    lettersCounted.textContent = 'Letters Counted: ';
+    victory.textContent = '';
+    
 
 }
 
@@ -82,11 +85,22 @@ function animalMagic() {
 
 document.onkeyup = function(e){
 
-    // increment keyCounter
+    // key capture on event
+    let keys = (e.key);
+    // validate key input
+    let badKeys = ['Backspace','Tab','Space','Shift','Enter'];
+    let pattern = new RegExp('[a-z]');
+    let result = pattern.test(keys);
+    if (result === false || badKeys.includes(keys)) {
+        alert('please use lowercase a - z characters only');
+    }
+    
+
+    // increment keyCounter used to determine losses
     keyCounter += 1;
 
     /*
-       Check For Loose Scenario
+       Check for Loose Scenario
        ========================================================================== */
     
     // check if keyCounter is greater than length of selected animal, bail out if greater
@@ -94,12 +108,14 @@ document.onkeyup = function(e){
         // clear input field
         guessInput.value = '';
         // clear letters guessed
-        letterUsed.innerText = '';
+        letterUsed.textContent = '';
+        // clear letters counted
+        lettersCounted.textContent = '';
         // display message
-        victory.innerText = 'You loose!!!!';
+        victory.textContent = 'You loose!!!!';
         // display losses
         lossesScore +=1;
-        document.querySelector('#losses').innerText = 'Number of Losses: ' + lossesScore;
+        document.querySelector('#losses').textContent = `Number of Losses: ${lossesScore}`;
         // reset keyCounter
         keyCounter = 0;
         // Innterupt game and load new animal
@@ -109,9 +125,6 @@ document.onkeyup = function(e){
     /*
        If Keycount not Exceeded; Evaluate Keyboard Input
        ========================================================================== */
-
-    // key capture on event
-    let keys = (e.key);
     
     // loop through selected animal string and check for matches with capture key event
     for (let j = 0; j < selectedAnimal.length; j++ ) {
@@ -122,11 +135,18 @@ document.onkeyup = function(e){
 
     } // end for loop
 
-    // write letters used to screen
-    letterUsed.innerText += keys;
- 
+    // write letters used to screen if and only if entries are valid
+    // if true, do NOTHING, else print keys to screen
+    if (badKeys.includes(keys));
+    else {
+        letterUsed.textContent += keys;
+    }
+
+    // write letters count to screen
+    lettersCounted.textContent = `Letters Counted: ${keyCounter}`;
+   
     // print to screen refactored underscores array that
-    animalHint.innerText = (undercoresArr.join(' '));
+    animalHint.textContent = (undercoresArr.join(' '));
 
 
     /*
@@ -135,10 +155,10 @@ document.onkeyup = function(e){
     
     // check if underscore string(from array) matches the selected animal
     if (undercoresArr.join('') === selectedAnimal) {
-        victory.innerText = 'WINNER!!!!';
-        // ** need to fix score math
+        victory.textContent = 'WINNER!!!!';
+        // increment score
         winsScore += 1;
-        document.querySelector('#wins').innerText = 'Number of Wins: ' + winsScore;
+        document.querySelector('#wins').textContent = `Number of Wins: ${winsScore}`;
         // clear input field
         guessInput.value = '';
         // reset keyCounter
